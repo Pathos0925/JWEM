@@ -1,6 +1,7 @@
 # JWEM
 Jurassic World Evolution Modkit
-Built on ReShade
+
+Built on ReShade!
 
 This is a proof of concept for replacing textures in DirectX games by hashing them at creation.
 
@@ -11,6 +12,7 @@ This is a proof of concept for replacing textures in DirectX games by hashing th
  
  - Open JWE. The Injector should Inject the DLL automatically.
  - Once in game, Hold SHIFT and press F2 to open the menu.
+ - You may need change the Shader and/or Texture quality in the Settings.
 	
 	![JWEM UI](https://github.com/Pathos0925/JWEM/blob/master/ReadmeImages/JWEMmenu.png)
 ## Also
@@ -37,3 +39,12 @@ This is a proof of concept for replacing textures in DirectX games by hashing th
  - Place the texture in the Skins folder and click "Reload Skins" in the UI.
  - Higher resolutions are only found on a few dinosaurs, I think the large sauropods, so only use a higher resolution if your target resolution requires it.
   - This method compresses the image on the GPU so it may take a few moments each time you load it. 
+
+## Questions
+ - Where do I find textures for a dino?
+ 	- Search Google, theres a few methods.
+- Can I use ReShade with this?
+	- I dunno, maybe. Let me know what you find.
+
+## TODO
+stuff
