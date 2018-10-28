@@ -1,0 +1,36 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2046
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JWEM Injector", "JWEM Injector.csproj", "{21DE0454-AE17-48B6-A673-4E22F017B096}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		64|Any CPU = 64|Any CPU
+		64|x64 = 64|x64
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{21DE0454-AE17-48B6-A673-4E22F017B096}.64|Any CPU.ActiveCfg = 64|Any CPU
+		{21DE0454-AE17-48B6-A673-4E22F017B096}.64|Any CPU.Build.0 = 64|Any CPU
+		{21DE0454-AE17-48B6-A673-4E22F017B096}.64|x64.ActiveCfg = 64|x64
+		{21DE0454-AE17-48B6-A673-4E22F017B096}.64|x64.Build.0 = 64|x64
+		{21DE0454-AE17-48B6-A673-4E22F017B096}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21DE0454-AE17-48B6-A673-4E22F017B096}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21DE0454-AE17-48B6-A673-4E22F017B096}.Debug|x64.ActiveCfg = Debug|x64
+		{21DE0454-AE17-48B6-A673-4E22F017B096}.Debug|x64.Build.0 = Debug|x64
+		{21DE0454-AE17-48B6-A673-4E22F017B096}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{21DE0454-AE17-48B6-A673-4E22F017B096}.Release|Any CPU.Build.0 = Release|Any CPU
+		{21DE0454-AE17-48B6-A673-4E22F017B096}.Release|x64.ActiveCfg = Release|x64
+		{21DE0454-AE17-48B6-A673-4E22F017B096}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C7280D93-2CDF-40E0-ACB4-1927E6167670}
+	EndGlobalSection
+EndGlobal

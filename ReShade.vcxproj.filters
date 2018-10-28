@@ -1,0 +1,387 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="core">
+      <UniqueIdentifier>{7dea67a5-a2de-4e39-94a8-e8f01b6f070f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="core\hook">
+      <UniqueIdentifier>{ed3eb34b-86ef-4bb0-b071-44f1163953bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="core\runtime">
+      <UniqueIdentifier>{ecdb23a8-21dc-4334-b5cf-2ea57d27001d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="core\utility">
+      <UniqueIdentifier>{d3347d57-7868-467f-a688-fe9c6adc8e5c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="hooks">
+      <UniqueIdentifier>{3c3eb495-1eeb-4c7c-b58f-3bbcf24758f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="hooks\d3d9">
+      <UniqueIdentifier>{63356f14-45b5-4047-9be1-e7e6e8a3f3e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="hooks\d3d10">
+      <UniqueIdentifier>{d61375df-0b47-4eb2-b2b9-ed8034d7d180}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="hooks\d3d11">
+      <UniqueIdentifier>{2ed46921-48e6-4996-a11c-0a246bd56a86}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="hooks\dxgi">
+      <UniqueIdentifier>{4d42777e-6ba3-4965-b0dc-88186095f1a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="hooks\windows">
+      <UniqueIdentifier>{ab5a23b3-e97e-4a41-99a1-89c6f1d54b16}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="resources">
+      <UniqueIdentifier>{7f3f7a66-aeb1-4c44-abb4-d7eff03a1247}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JWEM">
+      <UniqueIdentifier>{b10782de-d7e4-4012-8dac-21da44a9738e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DirectXTex">
+      <UniqueIdentifier>{c3ebbb6a-144d-477c-9c8a-970cbc2bc8f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DirectXTex\NewFilter1">
+      <UniqueIdentifier>{9ea2e89d-6ed8-41ef-853e-e4c01fa43841}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="source\dllmain.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="source\hook.cpp">
+      <Filter>core\hook</Filter>
+    </ClCompile>
+    <ClCompile Include="source\hook_manager.cpp">
+      <Filter>core\hook</Filter>
+    </ClCompile>
+    <ClCompile Include="source\gui.cpp">
+      <Filter>core\runtime</Filter>
+    </ClCompile>
+    <ClCompile Include="source\input.cpp">
+      <Filter>core\runtime</Filter>
+    </ClCompile>
+    <ClCompile Include="source\runtime.cpp">
+      <Filter>core\runtime</Filter>
+    </ClCompile>
+    <ClCompile Include="source\runtime_objects.cpp">
+      <Filter>core\runtime</Filter>
+    </ClCompile>
+    <ClCompile Include="source\filesystem.cpp">
+      <Filter>core\utility</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ini_file.cpp">
+      <Filter>core\utility</Filter>
+    </ClCompile>
+    <ClCompile Include="source\resource_loading.cpp">
+      <Filter>core\utility</Filter>
+    </ClCompile>
+    <ClCompile Include="source\log.cpp">
+      <Filter>core\utility</Filter>
+    </ClCompile>
+    <ClCompile Include="source\d3d9\d3d9.cpp">
+      <Filter>hooks\d3d9</Filter>
+    </ClCompile>
+    <ClCompile Include="source\d3d9\d3d9_device.cpp">
+      <Filter>hooks\d3d9</Filter>
+    </ClCompile>
+    <ClCompile Include="source\d3d9\d3d9_effect_compiler.cpp">
+      <Filter>hooks\d3d9</Filter>
+    </ClCompile>
+    <ClCompile Include="source\d3d9\d3d9_runtime.cpp">
+      <Filter>hooks\d3d9</Filter>
+    </ClCompile>
+    <ClCompile Include="source\d3d9\d3d9_swapchain.cpp">
+      <Filter>hooks\d3d9</Filter>
+    </ClCompile>
+    <ClCompile Include="source\d3d10\d3d10.cpp">
+      <Filter>hooks\d3d10</Filter>
+    </ClCompile>
+    <ClCompile Include="source\d3d10\d3d10_device.cpp">
+      <Filter>hooks\d3d10</Filter>
+    </ClCompile>
+    <ClCompile Include="source\d3d10\d3d10_effect_compiler.cpp">
+      <Filter>hooks\d3d10</Filter>
+    </ClCompile>
+    <ClCompile Include="source\d3d10\d3d10_runtime.cpp">
+      <Filter>hooks\d3d10</Filter>
+    </ClCompile>
+    <ClCompile Include="source\d3d10\d3d10_stateblock.cpp">
+      <Filter>hooks\d3d10</Filter>
+    </ClCompile>
+    <ClCompile Include="source\d3d11\d3d11.cpp">
+      <Filter>hooks\d3d11</Filter>
+    </ClCompile>
+    <ClCompile Include="source\d3d11\d3d11_device.cpp">
+      <Filter>hooks\d3d11</Filter>
+    </ClCompile>
+    <ClCompile Include="source\d3d11\d3d11_device_context.cpp">
+      <Filter>hooks\d3d11</Filter>
+    </ClCompile>
+    <ClCompile Include="source\d3d11\d3d11_effect_compiler.cpp">
+      <Filter>hooks\d3d11</Filter>
+    </ClCompile>
+    <ClCompile Include="source\d3d11\d3d11_runtime.cpp">
+      <Filter>hooks\d3d11</Filter>
+    </ClCompile>
+    <ClCompile Include="source\d3d11\d3d11_stateblock.cpp">
+      <Filter>hooks\d3d11</Filter>
+    </ClCompile>
+    <ClCompile Include="source\dxgi\dxgi.cpp">
+      <Filter>hooks\dxgi</Filter>
+    </ClCompile>
+    <ClCompile Include="source\dxgi\dxgi_device.cpp">
+      <Filter>hooks\dxgi</Filter>
+    </ClCompile>
+    <ClCompile Include="source\dxgi\dxgi_swapchain.cpp">
+      <Filter>hooks\dxgi</Filter>
+    </ClCompile>
+    <ClCompile Include="source\windows\user32.cpp">
+      <Filter>hooks\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="source\windows\ws2_32.cpp">
+      <Filter>hooks\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="source\directory_watcher.cpp">
+      <Filter>core\utility</Filter>
+    </ClCompile>
+    <ClCompile Include="source\d3d11\draw_call_tracker.cpp">
+      <Filter>hooks\d3d11</Filter>
+    </ClCompile>
+    <ClCompile Include="source\update_check.cpp">
+      <Filter>core\utility</Filter>
+    </ClCompile>
+    <ClCompile Include="source\d3d10\draw_call_tracker.cpp">
+      <Filter>hooks\d3d10</Filter>
+    </ClCompile>
+    <ClCompile Include="source\JWEMSingleton.cpp">
+      <Filter>JWEM</Filter>
+    </ClCompile>
+    <ClCompile Include="source\DirectXTex\BC.cpp">
+      <Filter>DirectXTex</Filter>
+    </ClCompile>
+    <ClCompile Include="source\DirectXTex\BC4BC5.cpp">
+      <Filter>DirectXTex</Filter>
+    </ClCompile>
+    <ClCompile Include="source\DirectXTex\BC6HBC7.cpp">
+      <Filter>DirectXTex</Filter>
+    </ClCompile>
+    <ClCompile Include="source\DirectXTex\BCDirectCompute.cpp">
+      <Filter>DirectXTex</Filter>
+    </ClCompile>
+    <ClCompile Include="source\DirectXTex\DirectXTexCompress.cpp">
+      <Filter>DirectXTex</Filter>
+    </ClCompile>
+    <ClCompile Include="source\DirectXTex\DirectXTexCompressGPU.cpp">
+      <Filter>DirectXTex</Filter>
+    </ClCompile>
+    <ClCompile Include="source\DirectXTex\DirectXTexConvert.cpp">
+      <Filter>DirectXTex</Filter>
+    </ClCompile>
+    <ClCompile Include="source\DirectXTex\DirectXTexD3D11.cpp">
+      <Filter>DirectXTex</Filter>
+    </ClCompile>
+    <ClCompile Include="source\DirectXTex\DirectXTexD3D12.cpp">
+      <Filter>DirectXTex</Filter>
+    </ClCompile>
+    <ClCompile Include="source\DirectXTex\DirectXTexDDS.cpp">
+      <Filter>DirectXTex</Filter>
+    </ClCompile>
+    <ClCompile Include="source\DirectXTex\DirectXTexFlipRotate.cpp">
+      <Filter>DirectXTex</Filter>
+    </ClCompile>
+    <ClCompile Include="source\DirectXTex\DirectXTexHDR.cpp">
+      <Filter>DirectXTex</Filter>
+    </ClCompile>
+    <ClCompile Include="source\DirectXTex\DirectXTexImage.cpp">
+      <Filter>DirectXTex</Filter>
+    </ClCompile>
+    <ClCompile Include="source\DirectXTex\DirectXTexMipmaps.cpp">
+      <Filter>DirectXTex</Filter>
+    </ClCompile>
+    <ClCompile Include="source\DirectXTex\DirectXTexMisc.cpp">
+      <Filter>DirectXTex</Filter>
+    </ClCompile>
+    <ClCompile Include="source\DirectXTex\DirectXTexNormalMaps.cpp">
+      <Filter>DirectXTex</Filter>
+    </ClCompile>
+    <ClCompile Include="source\DirectXTex\DirectXTexPMAlpha.cpp">
+      <Filter>DirectXTex</Filter>
+    </ClCompile>
+    <ClCompile Include="source\DirectXTex\DirectXTexResize.cpp">
+      <Filter>DirectXTex</Filter>
+    </ClCompile>
+    <ClCompile Include="source\DirectXTex\DirectXTexTGA.cpp">
+      <Filter>DirectXTex</Filter>
+    </ClCompile>
+    <ClCompile Include="source\DirectXTex\DirectXTexUtil.cpp">
+      <Filter>DirectXTex</Filter>
+    </ClCompile>
+    <ClCompile Include="source\DirectXTex\DirectXTexWIC.cpp">
+      <Filter>DirectXTex</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="source\hook.hpp">
+      <Filter>core\hook</Filter>
+    </ClInclude>
+    <ClInclude Include="source\hook_manager.hpp">
+      <Filter>core\hook</Filter>
+    </ClInclude>
+    <ClInclude Include="source\input.hpp">
+      <Filter>core\runtime</Filter>
+    </ClInclude>
+    <ClInclude Include="source\runtime.hpp">
+      <Filter>core\runtime</Filter>
+    </ClInclude>
+    <ClInclude Include="source\runtime_objects.hpp">
+      <Filter>core\runtime</Filter>
+    </ClInclude>
+    <ClInclude Include="source\variant.hpp">
+      <Filter>core\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="source\moving_average.hpp">
+      <Filter>core\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="source\com_ptr.hpp">
+      <Filter>core\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="source\resource_loading.hpp">
+      <Filter>core\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="source\filesystem.hpp">
+      <Filter>core\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ini_file.hpp">
+      <Filter>core\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="source\log.hpp">
+      <Filter>core\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="source\d3d9\d3d9.hpp">
+      <Filter>hooks\d3d9</Filter>
+    </ClInclude>
+    <ClInclude Include="source\d3d9\d3d9_effect_compiler.hpp">
+      <Filter>hooks\d3d9</Filter>
+    </ClInclude>
+    <ClInclude Include="source\d3d9\d3d9_device.hpp">
+      <Filter>hooks\d3d9</Filter>
+    </ClInclude>
+    <ClInclude Include="source\d3d9\d3d9_runtime.hpp">
+      <Filter>hooks\d3d9</Filter>
+    </ClInclude>
+    <ClInclude Include="source\d3d9\d3d9_swapchain.hpp">
+      <Filter>hooks\d3d9</Filter>
+    </ClInclude>
+    <ClInclude Include="source\d3d10\d3d10.hpp">
+      <Filter>hooks\d3d10</Filter>
+    </ClInclude>
+    <ClInclude Include="source\d3d10\d3d10_device.hpp">
+      <Filter>hooks\d3d10</Filter>
+    </ClInclude>
+    <ClInclude Include="source\d3d10\d3d10_effect_compiler.hpp">
+      <Filter>hooks\d3d10</Filter>
+    </ClInclude>
+    <ClInclude Include="source\d3d10\d3d10_runtime.hpp">
+      <Filter>hooks\d3d10</Filter>
+    </ClInclude>
+    <ClInclude Include="source\d3d10\d3d10_stateblock.hpp">
+      <Filter>hooks\d3d10</Filter>
+    </ClInclude>
+    <ClInclude Include="source\d3d11\d3d11.hpp">
+      <Filter>hooks\d3d11</Filter>
+    </ClInclude>
+    <ClInclude Include="source\d3d11\d3d11_device.hpp">
+      <Filter>hooks\d3d11</Filter>
+    </ClInclude>
+    <ClInclude Include="source\d3d11\d3d11_device_context.hpp">
+      <Filter>hooks\d3d11</Filter>
+    </ClInclude>
+    <ClInclude Include="source\d3d11\d3d11_effect_compiler.hpp">
+      <Filter>hooks\d3d11</Filter>
+    </ClInclude>
+    <ClInclude Include="source\d3d11\d3d11_runtime.hpp">
+      <Filter>hooks\d3d11</Filter>
+    </ClInclude>
+    <ClInclude Include="source\d3d11\d3d11_stateblock.hpp">
+      <Filter>hooks\d3d11</Filter>
+    </ClInclude>
+    <ClInclude Include="source\dxgi\dxgi.hpp">
+      <Filter>hooks\dxgi</Filter>
+    </ClInclude>
+    <ClInclude Include="source\dxgi\dxgi_device.hpp">
+      <Filter>hooks\dxgi</Filter>
+    </ClInclude>
+    <ClInclude Include="source\dxgi\dxgi_swapchain.hpp">
+      <Filter>hooks\dxgi</Filter>
+    </ClInclude>
+    <ClInclude Include="res\resource.h">
+      <Filter>resources</Filter>
+    </ClInclude>
+    <ClInclude Include="res\version.h">
+      <Filter>resources</Filter>
+    </ClInclude>
+    <ClInclude Include="source\directory_watcher.hpp">
+      <Filter>core\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="source\d3d11\draw_call_tracker.hpp">
+      <Filter>hooks\d3d11</Filter>
+    </ClInclude>
+    <ClInclude Include="source\d3d10\draw_call_tracker.hpp">
+      <Filter>hooks\d3d10</Filter>
+    </ClInclude>
+    <ClInclude Include="source\JWEMSingleton.h">
+      <Filter>JWEM</Filter>
+    </ClInclude>
+    <ClInclude Include="source\DirectXTex\BC.h">
+      <Filter>DirectXTex</Filter>
+    </ClInclude>
+    <ClInclude Include="source\DirectXTex\BCDirectCompute.h">
+      <Filter>DirectXTex</Filter>
+    </ClInclude>
+    <ClInclude Include="source\DirectXTex\d3dx12.h">
+      <Filter>DirectXTex</Filter>
+    </ClInclude>
+    <ClInclude Include="source\DirectXTex\DDS.h">
+      <Filter>DirectXTex</Filter>
+    </ClInclude>
+    <ClInclude Include="source\DirectXTex\DirectXTex.h">
+      <Filter>DirectXTex</Filter>
+    </ClInclude>
+    <ClInclude Include="source\DirectXTex\DirectXTexP.h">
+      <Filter>DirectXTex</Filter>
+    </ClInclude>
+    <ClInclude Include="source\DirectXTex\Filters.h">
+      <Filter>DirectXTex</Filter>
+    </ClInclude>
+    <ClInclude Include="source\DirectXTex\scoped.h">
+      <Filter>DirectXTex</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="res\shader_copy_ps.hlsl">
+      <Filter>resources</Filter>
+    </FxCompile>
+    <FxCompile Include="res\shader_copy_vs.hlsl">
+      <Filter>resources</Filter>
+    </FxCompile>
+    <FxCompile Include="res\shader_imgui_ps.hlsl">
+      <Filter>resources</Filter>
+    </FxCompile>
+    <FxCompile Include="res\shader_imgui_vs.hlsl">
+      <Filter>resources</Filter>
+    </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\exports.def">
+      <Filter>resources</Filter>
+    </None>
+    <None Include="res\resource.rc2">
+      <Filter>resources</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="res\resource.rc">
+      <Filter>resources</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>

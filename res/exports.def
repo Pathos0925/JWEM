@@ -1,0 +1,63 @@
+EXPORTS
+	; d3d9.dll
+	Direct3DCreate9
+	Direct3DCreate9Ex
+
+	D3DPERF_BeginEvent
+	D3DPERF_EndEvent
+	D3DPERF_SetMarker
+	D3DPERF_SetRegion
+	D3DPERF_QueryRepeatFrame
+	D3DPERF_SetOptions
+	D3DPERF_GetStatus
+
+	; d3d10.dll
+	D3D10CreateDevice
+	D3D10CreateDeviceAndSwapChain
+
+	; d3d10_1.dll
+	D3D10CreateDevice1
+	D3D10CreateDeviceAndSwapChain1
+
+	; d3d11.dll
+	D3D11CreateDevice
+	D3D11CreateDeviceAndSwapChain
+
+	; dxgi.dll
+	CreateDXGIFactory
+	CreateDXGIFactory1
+	CreateDXGIFactory2
+
+	DXGIDumpJournal
+	DXGIReportAdapterConfiguration
+	DXGID3D10CreateDevice
+	DXGID3D10CreateLayeredDevice
+	DXGID3D10GetLayeredDeviceSize
+	DXGID3D10RegisterLayers
+
+
+	; user32.dll
+	RegisterClassA = HookRegisterClassA
+	RegisterClassW = HookRegisterClassW
+	RegisterClassExA = HookRegisterClassExA
+	RegisterClassExW = HookRegisterClassExW
+	RegisterRawInputDevices = HookRegisterRawInputDevices
+	GetMessageA = HookGetMessageA
+	GetMessageW = HookGetMessageW
+	PeekMessageA = HookPeekMessageA
+	PeekMessageW = HookPeekMessageW
+	PostMessageA = HookPostMessageA
+	PostMessageW = HookPostMessageW
+	GetCursorPos = HookGetCursorPosition
+	SetCursorPos = HookSetCursorPosition
+
+	; ws2_32.dll
+	send = HookSend
+	sendto = HookSendTo
+	recv = HookRecv
+	recvfrom = HookRecvFrom
+	WSASend = HookWSASend
+	WSASendTo = HookWSASendTo
+	WSARecv = HookWSARecv
+	WSARecvEx = HookWSARecvEx
+	WSARecvFrom = HookWSARecvFrom
