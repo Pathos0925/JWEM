@@ -40,8 +40,7 @@ This is a proof of concept built on ReShade for replacing textures in DirectX ga
   - This method compresses the image on the GPU so it may take a few moments each time you load it. 
 
 ## Also
- - At preasent, JWEM will likely lower your framerate significantly, you may need to lower your graphics settings. However you may need to keep Shader and Texture settings on medium or high.
- - Any DLL injector should work, so long as you inject it right as the game starts.
+ - JWEM may lower your framerate. If you adjust your graphics settings, you may need to keep Shader and Texture settings on medium or high.
  - If you find loading a save with many dinosaurs takes too long, uncheck "Enabled" in the in-game menu until after you load the save and recheck it before you release a dinosaur.
  
 ## Questions
