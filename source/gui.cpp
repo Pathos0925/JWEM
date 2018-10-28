@@ -1094,7 +1094,16 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 				crcListId++;
 				//get ID for this tex CRC.
 
-				auto texName = JWEmSingleton->crcTextureName[dinoTex];//.substr(0,6)
+				//auto texName = JWEmSingleton->crcTextureName[dinoTex];//.substr(0,6)
+				std::string texName;
+
+				std::vector<uint32_t>::iterator it = std::find(JWEmSingleton->crcListCrc.begin(), JWEmSingleton->crcListCrc.end(), dinoTex);
+				if (it != JWEmSingleton->crcListCrc.end())
+				{
+					int index = std::distance(JWEmSingleton->crcListCrc.begin(), it);
+					texName = JWEmSingleton->crcListName[index];
+				}
+
 				auto sizeAndType = texName.substr(6, texName.length() - 6);
 				if (sizeAndType != "-1024-A")
 					continue;
@@ -1102,9 +1111,9 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 				texName = texName.substr(0, 6);
 				//ALLO-0
 
-				//Get the skin types (Basic, Woodlands, etc.. Theyre different for each skin) for the main Diffuse (color texture)
-				std::map<std::string, std::string>::iterator it = JWEmSingleton->idToNameList.find(texName);
-				if (it != JWEmSingleton->idToNameList.end())
+				//Get the skin types (Basic, Woodlands, etc.. Theyre different for each skin) for the main Diffuse (color texture)				
+				std::map<std::string, std::string>::iterator it2 = JWEmSingleton->idToNameList.find(texName);
+				if (it2 != JWEmSingleton->idToNameList.end())
 				{
 
 					texCount++;
@@ -1118,8 +1127,8 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 					//prefixToName
 					//auto fullName =
 
-					std::string nameId = it->first;
-					auto DinoTexName = it->second;
+					std::string nameId = it2->first;
+					auto DinoTexName = it2->second;
 
 					ImGui::TextColored(ImVec4(0.11f, 0.37f, 0.13f, 1.0f), DinoTexName.c_str());//ImVec4(0.11, 0.37, 0.13, 1.0)
 
@@ -1174,12 +1183,14 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 			}
 			if (ImGui::CollapsingHeader("CRC list"))
 			{
-				for (auto const& x : JWEmSingleton->crcTextureName)
+				int index = 0;
+				for (auto const& x : JWEmSingleton->crcListName)
 				{
-					ImGui::Text(std::to_string(x.first).c_str());
+					ImGui::Text(std::to_string(JWEmSingleton->crcListCrc[index]).c_str());
 					ImGui::SameLine();
-					ImGui::Text(x.second.c_str());
+					ImGui::Text(x.c_str());
 					//ImGui::Text(std::to_string(texCount).c_str());
+					index++;
 				}
 			}
 			if (ImGui::CollapsingHeader("Skin ID list"))
@@ -1304,12 +1315,21 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 						{
 							//guess type
 							//crc_name
+
+							std::vector<uint32_t>::iterator it = std::find(JWEmSingleton->crcListCrc.begin(), JWEmSingleton->crcListCrc.end(), JWEmSingleton->GetDebugInitialCrcList()[texCount]);
+							if (it != JWEmSingleton->crcListCrc.end())
+							{
+								int index = std::distance(JWEmSingleton->crcListCrc.begin(), it);
+								ImGui::TextColored(ImVec4(0.11f, 0.37f, 0.13f, 1.0f), JWEmSingleton->crcListName[index].c_str());//ImVec4(0.11, 0.37, 0.13, 1.0)
+							}
+							/*
 							std::map<uint32_t, std::string>::iterator it = JWEmSingleton->crcTextureName.find(JWEmSingleton->GetDebugInitialCrcList()[texCount]);
 							if (it != JWEmSingleton->crcTextureName.end())
 							{
 								//element found
 								ImGui::TextColored(ImVec4(0.11f, 0.37f, 0.13f, 1.0f), it->second.c_str());//ImVec4(0.11, 0.37, 0.13, 1.0)
 							}
+							*/
 							else if (JWEmSingleton->GetDebugInitialCrcList()[texCount] == 1349185214)
 							{
 								ImGui::TextColored(ImVec4(0.0f, 0.34f, 0.61f, 1.0f), "empty normalmap");

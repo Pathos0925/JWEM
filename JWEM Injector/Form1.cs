@@ -58,7 +58,7 @@ namespace JWEM_Injector
             "Giganotosaurus",
             "Gigantspinosaurus",
             "Huayangosaurus",
-            "Indominus Rex",
+            "IndominusRex",
             "Indoraptor",
             "Kentrosaurus",
             "Maiasaura",
@@ -116,7 +116,6 @@ namespace JWEM_Injector
 
         private void Form1_Load(object sender, EventArgs e)
         {           
-            findApplicationTimer.Enabled = true;
             textureTypeDropdown.Items.AddRange(TextureTypes);
             textureTypeDropdown.SelectedIndex = 0;
             textureTypeDropdown.Update();
@@ -146,9 +145,10 @@ namespace JWEM_Injector
                 return false;
             }
         }
-
+		
         private void findApplicationTimer_Tick(object sender, EventArgs e)
         {
+			/*
             if (!enabledCheckBox.Checked)
                 return;
 
@@ -189,9 +189,11 @@ namespace JWEM_Injector
             {
 
             }
-        }
+			*/
+		}
 
-        private void btnSave_Click(object sender, EventArgs e)
+
+		private void btnSave_Click(object sender, EventArgs e)
         {
             var skinName = speciesDropdown.SelectedItem.ToString() + " Skin" + ".JWEMS";
             saveFileDialog1.Filter = "JWE Mod Skin(*.JWEMS)|*.JWEMS";
@@ -232,6 +234,7 @@ namespace JWEM_Injector
 
 
             }
+			MessageBox.Show("Done!");
         }
 
        

@@ -513,5 +513,10 @@ namespace ReShade.Setup
 			SetupButton.Click -= OnSetupButtonClick;
 			SetupButton.Click += (object s, RoutedEventArgs e) => new SettingsWindow(_configPath) { Owner = this }.ShowDialog();
 		}
+
+		private void ApiDirectXGI_Checked(object sender, RoutedEventArgs e)
+		{
+
+		}
 	}
 }

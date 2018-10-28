@@ -109,11 +109,15 @@ public:
 
 	std::mutex mtx;
 
-
+	/*
 	std::map<uint32_t, std::string> crcTextureName = {
 
 
 	};
+	*/
+	std::vector< uint32_t> crcListCrc;
+	std::vector< std::string> crcListName;
+
 
 
 	std::map<std::string, std::string> idToNameList = {
@@ -263,7 +267,10 @@ public:
 		{
 			int idCount = 0;
 
-			crcTextureName.clear();
+			//crcTextureName.clear();
+			crcListCrc.clear();
+			crcListName.clear();
+
 			for (std::string line; getline(crcFile, line); )
 			{
 				try
@@ -278,11 +285,13 @@ public:
 					if (found != std::string::npos)
 					{
 						std::string crcString = line.substr(0, found);
-						crc = std::stoi(crcString);
+						crc = std::stoul(crcString);
 
 						std::string id = line.substr(found + 1, line.length() - found);
 
-						crcTextureName.insert(std::pair<uint32_t, std::string>(crc, id));
+						//crcTextureName.insert(std::pair<uint32_t, std::string>(crc, id));
+						crcListName.push_back(id);
+						crcListCrc.push_back(crc);
 						idCount++;
 					}
 				}
@@ -387,13 +396,24 @@ public:
 
 				std::string id = filename.substr(filename.length() - 13, 13);
 
-				std::vector<uint32_t> vec;
+				//std::vector<uint32_t> vec;
+				std::vector<std::string>::iterator it = std::find(crcListName.begin(), crcListName.end(), id);
+				if (it != crcListName.end())
+				{
+					int index = std::distance(crcListName.begin(), it);
+
+					std::string combined = dir + p.filename().string();
+					discoveredSkins.insert(std::pair<std::string, uint32_t>(combined, crcListCrc[index]));
+					//LOG(DEBUG) << "Found skin for " << id << " at: " << combined;
+				}
+				/*
 				if (findByValue(vec, crcTextureName, id))
 				{
 					std::string combined = dir + p.filename().string();
 					discoveredSkins.insert(std::pair<std::string, uint32_t>(combined, vec[0]));
 					//LOG(DEBUG) << "Found skin for " << id << " at: " << combined;
 				}
+				*/
 			}
 
 		}
@@ -472,7 +492,16 @@ public:
 				fileNames->push_back(filename);
 			}
 		}
-		std::string Id = crcTextureName[crc].substr(0, 6);
+		//std::string Id = crcTextureName[crc].substr(0, 6);
+		std::string Id;
+
+		std::vector<uint32_t>::iterator it = std::find(crcListCrc.begin(), crcListCrc.end(), crc);
+		if (it != crcListCrc.end())
+		{
+			int index = std::distance(crcListCrc.begin(), it);
+			Id = crcListName[index];
+		}
+
 		std::string SpeciesName = idToNameList[Id];
 		SpeciesName = SpeciesName.substr(0, SpeciesName.find(" "));
 		int index = 0;
@@ -556,12 +585,21 @@ public:
 
 
 		mtx.lock();
+
+		std::vector<uint32_t>::iterator it = std::find(crcListCrc.begin(), crcListCrc.end(), initialCrc);
+		if (it != crcListCrc.end())
+		{
+			DinoTexList.push_back(tex);
+			DinoCrcList.push_back(initialCrc);
+		}
+		/*
 		std::map<uint32_t, std::string>::iterator it = crcTextureName.find(initialCrc);
 		if (it != crcTextureName.end())
 		{
 			DinoTexList.push_back(tex);
 			DinoCrcList.push_back(initialCrc);
 		}
+		*/
 		if (MonitorTextures)
 		{
 			DebugTexList.push_back(tex);
@@ -660,12 +698,22 @@ public:
 				id = ids[0];
 				id = id + "-1024-" + type;
 
+				/*
 				std::vector<uint32_t> vec;
 				if (!findByValue(vec, crcTextureName, id))
 				{
 					LOG(ERROR) << " Couldent crc for id in JWEMS";
 				}
-				ptrdiff_t cpos = find(DinoCrcList.begin(), DinoCrcList.end(), vec[0]) - DinoCrcList.begin();
+				*/
+				uint32_t crcPosInList;
+				std::vector<std::string>::iterator it = std::find(crcListName.begin(), crcListName.end(), id);
+				if (it != crcListName.end())
+				{
+					int index = std::distance(crcListName.begin(), it);
+					crcPosInList = crcListCrc[index];
+				}
+
+				ptrdiff_t cpos = find(DinoCrcList.begin(), DinoCrcList.end(), crcPosInList) - DinoCrcList.begin();
 				auto texToUpdate = DinoTexList[cpos];
 
 				char * DDSDataBuffer = new char[info.dataLength];
@@ -704,6 +752,28 @@ public:
 
 			skinId = skinId.substr(skinId.length() - 13, 13);
 			//check if we have a crc for this id
+
+			std::vector<std::string>::iterator it = std::find(crcListName.begin(), crcListName.end(), skinId);
+			if (it != crcListName.end())
+			{
+				int index = std::distance(crcListName.begin(), it);
+				auto foundCrc = crcListCrc[index];
+				if (std::find(DinoCrcList.begin(), DinoCrcList.end(), foundCrc) != DinoCrcList.end())
+				{
+					LOG(DEBUG) << "-LoadTextureFromFile: " << individualSkinName;
+					DirectX::ScratchImage loadedImage = LoadTextureFromFile(individualSkinName, true);
+
+
+					LOG(DEBUG) << "-GetDinoTexList";
+					auto texToUpdate = GetDinoTexList()[index].get();
+
+
+					ProcessAndLoadImageIntoPoiner(&loadedImage, texToUpdate);
+					//Loadimageintoptr
+
+				}
+			}
+			/*
 			std::vector<uint32_t> vec;
 			if (findByValue(vec, crcTextureName, skinId))
 			{
@@ -722,6 +792,7 @@ public:
 
 				}
 			}
+			*/
 
 
 		}

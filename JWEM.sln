@@ -26,7 +26,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ReShade FX", "ReShadeFX.vcx
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReShade Setup", "setup\ReShade Setup.csproj", "{3B7009FA-0B09-4F27-8126-0885E66A5679}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JWEM Injector", "JWEM Injector\JWEM Injector.csproj", "{21DE0454-AE17-48B6-A673-4E22F017B096}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JWEM SkinBuilder", "JWEM Injector\JWEM SkinBuilder.csproj", "{21DE0454-AE17-48B6-A673-4E22F017B096}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

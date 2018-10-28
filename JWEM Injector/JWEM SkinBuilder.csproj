@@ -7,7 +7,7 @@
     <ProjectGuid>{21DE0454-AE17-48B6-A673-4E22F017B096}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>JWEM_Injector</RootNamespace>
-    <AssemblyName>JWEM Injector</AssemblyName>
+    <AssemblyName>JWEM Skin Builder</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -108,6 +108,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

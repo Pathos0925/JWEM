@@ -28,11 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.statusLabel = new System.Windows.Forms.Label();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.enabledCheckBox = new System.Windows.Forms.CheckBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.buildStatusLbl = new System.Windows.Forms.Label();
+            this.useGPUChk = new System.Windows.Forms.CheckBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.btnSave = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -42,53 +40,18 @@
             this.btnAddTexture = new System.Windows.Forms.Button();
             this.textureTypeDropdown = new System.Windows.Forms.ComboBox();
             this.speciesDropdown = new System.Windows.Forms.ComboBox();
-            this.findApplicationTimer = new System.Windows.Forms.Timer(this.components);
             this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.useGPUChk = new System.Windows.Forms.CheckBox();
-            this.buildStatusLbl = new System.Windows.Forms.Label();
-            this.groupBox1.SuspendLayout();
+            this.statusLabel = new System.Windows.Forms.Label();
+            this.enabledCheckBox = new System.Windows.Forms.CheckBox();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
-            this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // statusLabel
-            // 
-            this.statusLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.statusLabel.Location = new System.Drawing.Point(6, 39);
-            this.statusLabel.Name = "statusLabel";
-            this.statusLabel.Size = new System.Drawing.Size(290, 23);
-            this.statusLabel.TabIndex = 0;
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.enabledCheckBox);
-            this.groupBox1.Controls.Add(this.statusLabel);
-            this.groupBox1.Location = new System.Drawing.Point(6, 10);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(302, 74);
-            this.groupBox1.TabIndex = 3;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Injector";
-            // 
-            // enabledCheckBox
-            // 
-            this.enabledCheckBox.AutoSize = true;
-            this.enabledCheckBox.Checked = true;
-            this.enabledCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.enabledCheckBox.Location = new System.Drawing.Point(6, 19);
-            this.enabledCheckBox.Name = "enabledCheckBox";
-            this.enabledCheckBox.Size = new System.Drawing.Size(65, 17);
-            this.enabledCheckBox.TabIndex = 1;
-            this.enabledCheckBox.Text = "Enabled";
-            this.enabledCheckBox.UseVisualStyleBackColor = true;
             // 
             // groupBox2
             // 
@@ -104,6 +67,27 @@
             this.groupBox2.TabIndex = 4;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Build JWEskin";
+            // 
+            // buildStatusLbl
+            // 
+            this.buildStatusLbl.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.buildStatusLbl.Location = new System.Drawing.Point(3, 294);
+            this.buildStatusLbl.Name = "buildStatusLbl";
+            this.buildStatusLbl.Size = new System.Drawing.Size(299, 23);
+            this.buildStatusLbl.TabIndex = 8;
+            // 
+            // useGPUChk
+            // 
+            this.useGPUChk.AutoSize = true;
+            this.useGPUChk.Checked = true;
+            this.useGPUChk.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.useGPUChk.Location = new System.Drawing.Point(143, 46);
+            this.useGPUChk.Name = "useGPUChk";
+            this.useGPUChk.Size = new System.Drawing.Size(71, 17);
+            this.useGPUChk.TabIndex = 7;
+            this.useGPUChk.Text = "Use GPU";
+            this.useGPUChk.UseVisualStyleBackColor = true;
+            this.useGPUChk.CheckedChanged += new System.EventHandler(this.useGPUChk_CheckedChanged);
             // 
             // pictureBox1
             // 
@@ -187,14 +171,8 @@
             this.speciesDropdown.Size = new System.Drawing.Size(156, 21);
             this.speciesDropdown.TabIndex = 0;
             // 
-            // findApplicationTimer
-            // 
-            this.findApplicationTimer.Interval = 1;
-            this.findApplicationTimer.Tick += new System.EventHandler(this.findApplicationTimer_Tick);
-            // 
             // tabControl1
             // 
-            this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Location = new System.Drawing.Point(12, 5);
             this.tabControl1.Margin = new System.Windows.Forms.Padding(0);
@@ -203,17 +181,6 @@
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(325, 358);
             this.tabControl1.TabIndex = 5;
-            // 
-            // tabPage1
-            // 
-            this.tabPage1.Controls.Add(this.groupBox1);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(317, 332);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Injector";
-            this.tabPage1.UseVisualStyleBackColor = true;
             // 
             // tabPage2
             // 
@@ -230,26 +197,25 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
-            // useGPUChk
+            // statusLabel
             // 
-            this.useGPUChk.AutoSize = true;
-            this.useGPUChk.Checked = true;
-            this.useGPUChk.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.useGPUChk.Location = new System.Drawing.Point(143, 46);
-            this.useGPUChk.Name = "useGPUChk";
-            this.useGPUChk.Size = new System.Drawing.Size(71, 17);
-            this.useGPUChk.TabIndex = 7;
-            this.useGPUChk.Text = "Use GPU";
-            this.useGPUChk.UseVisualStyleBackColor = true;
-            this.useGPUChk.CheckedChanged += new System.EventHandler(this.useGPUChk_CheckedChanged);
+            this.statusLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.statusLabel.Location = new System.Drawing.Point(6, 39);
+            this.statusLabel.Name = "statusLabel";
+            this.statusLabel.Size = new System.Drawing.Size(290, 23);
+            this.statusLabel.TabIndex = 0;
             // 
-            // buildStatusLbl
+            // enabledCheckBox
             // 
-            this.buildStatusLbl.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.buildStatusLbl.Location = new System.Drawing.Point(3, 294);
-            this.buildStatusLbl.Name = "buildStatusLbl";
-            this.buildStatusLbl.Size = new System.Drawing.Size(299, 23);
-            this.buildStatusLbl.TabIndex = 8;
+            this.enabledCheckBox.AutoSize = true;
+            this.enabledCheckBox.Checked = true;
+            this.enabledCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.enabledCheckBox.Location = new System.Drawing.Point(6, 19);
+            this.enabledCheckBox.Name = "enabledCheckBox";
+            this.enabledCheckBox.Size = new System.Drawing.Size(65, 17);
+            this.enabledCheckBox.TabIndex = 1;
+            this.enabledCheckBox.Text = "Enabled";
+            this.enabledCheckBox.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
@@ -259,28 +225,20 @@
             this.Controls.Add(this.tabControl1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "Form1";
-            this.Text = "JWEM Injector";
+            this.Text = "JWEM Skin Builder";
             this.Load += new System.EventHandler(this.Form1_Load);
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.panel1.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
-        private System.Windows.Forms.Label statusLabel;
-        private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.Timer findApplicationTimer;
-        private System.Windows.Forms.CheckBox enabledCheckBox;
         private System.Windows.Forms.ComboBox speciesDropdown;
         private System.Windows.Forms.ComboBox textureTypeDropdown;
         private System.Windows.Forms.Panel panel1;
@@ -289,7 +247,6 @@
         private System.Windows.Forms.Button btnAddTexture;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
@@ -297,5 +254,7 @@
         private System.Windows.Forms.ComboBox resDropdown;
         private System.Windows.Forms.CheckBox useGPUChk;
         private System.Windows.Forms.Label buildStatusLbl;
-    }
+		private System.Windows.Forms.Label statusLabel;
+		private System.Windows.Forms.CheckBox enabledCheckBox;
+	}
 }
