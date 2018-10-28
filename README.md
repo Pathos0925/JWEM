@@ -40,9 +40,10 @@ This is a proof of concept for replacing textures in DirectX games by hashing th
  - Higher resolutions are only found on a few dinosaurs, I think the large sauropods, so only use a higher resolution if your target resolution requires it.
   - This method compresses the image on the GPU so it may take a few moments each time you load it. 
 
-## Info
+## Also
  - Any DLL injector should work, so long as you inject it right as the game starts.
-
+ - If you find loading a save with many dinosaurs takes too long, uncheck "Enabled" until after you load the save and recheck it before you release a dinosaur.
+ 
 ## Questions
  - Where do I find textures for a dino?
  	- Search Google, theres a few methods.
