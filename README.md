@@ -10,7 +10,7 @@ This is a proof of concept for replacing textures in DirectX games by hashing th
  - Extract the file and run JWEM Injector.exe.
  - Close JWE if its running.
  
- - Open JWE. The Injector should Inject the DLL automatically.
+ - Open JWE. The Injector should Inject the DLL automatically. After injecting, you can close the Injector.
  - Once in game, Hold SHIFT and press F2 to open the menu.
  - You may need change the Shader and/or Texture quality in the Settings.
 	
