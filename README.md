@@ -7,10 +7,8 @@ This is a proof of concept built on ReShade for replacing textures in DirectX ga
 
 ## How to use
  - Click on "Release" near the top of this page and download Release01.zip.
- - Extract the file and run JWEM Injector.exe.
- - Close JWE if its running.
- 
- - Open JWE. The Injector should Inject the DLL automatically. After injecting, you can close the Injector.
+ - Extract the files and move them into your Jurassic World Evolution directory. 
+ - Open the game.
  - Once in game, Hold SHIFT and press F2 to open the menu.
  - You may need change the Shader and/or Texture quality in the Settings.
 	
@@ -25,7 +23,7 @@ This is a proof of concept built on ReShade for replacing textures in DirectX ga
 ## Creating Skins
 
 ### For Sharing
- - If you plan on making a skin pack (that can include albedo, normalmap, and other textures), open the Injector and go to the Build Skin tab.
+ - If you plan on making a skin pack (that can include albedo, normalmap, and other textures), use the Skin Builder.
  - Click "Add" and select your modified albedo texture.
  - Select the target species in the top right.
  - Click "Save".
