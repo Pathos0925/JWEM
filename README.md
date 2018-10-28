@@ -6,7 +6,7 @@ Built on ReShade!
 This is a proof of concept for replacing textures in DirectX games by hashing them at creation.
 
 ## How to use
- - Click on "Release" near the top of this page and download JWEM01.zip.
+ - Click on "Release" near the top of this page and download Release01.zip.
  - Extract the file and run JWEM Injector.exe.
  - Close JWE if its running.
  
