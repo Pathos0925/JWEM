@@ -42,7 +42,7 @@ This is a proof of concept for replacing textures in DirectX games by hashing th
 
 ## Also
  - Any DLL injector should work, so long as you inject it right as the game starts.
- - If you find loading a save with many dinosaurs takes too long, uncheck "Enabled" until after you load the save and recheck it before you release a dinosaur.
+ - If you find loading a save with many dinosaurs takes too long, uncheck "Enabled" in the in-game menu until after you load the save and recheck it before you release a dinosaur.
  
 ## Questions
  - Where do I find textures for a dino?
