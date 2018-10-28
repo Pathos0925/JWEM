@@ -49,7 +49,7 @@ struct texture_item
 
 /* CRC-32C (iSCSI) polynomial in reversed bit order. */
 #define POLY 0x82f63b78
-#define JWEM_VERSION_STRING_FILE "0.1"
+#define JWEM_VERSION_STRING_FILE "0.2"
 
 
 //namespace fs = std::filesystem;
@@ -501,7 +501,7 @@ public:
 			int index = std::distance(crcListCrc.begin(), it);
 			Id = crcListName[index];
 		}
-
+		Id = Id.substr(0, 6);
 		std::string SpeciesName = idToNameList[Id];
 		SpeciesName = SpeciesName.substr(0, SpeciesName.find(" "));
 		int index = 0;
@@ -758,14 +758,18 @@ public:
 			{
 				int index = std::distance(crcListName.begin(), it);
 				auto foundCrc = crcListCrc[index];
-				if (std::find(DinoCrcList.begin(), DinoCrcList.end(), foundCrc) != DinoCrcList.end())
+
+				auto foundCrcid = std::find(DinoCrcList.begin(), DinoCrcList.end(), foundCrc);
+				if (foundCrcid != DinoCrcList.end())
 				{
+					auto texindex = std::distance(DinoCrcList.begin(), foundCrcid);
+
 					LOG(DEBUG) << "-LoadTextureFromFile: " << individualSkinName;
 					DirectX::ScratchImage loadedImage = LoadTextureFromFile(individualSkinName, true);
 
 
 					LOG(DEBUG) << "-GetDinoTexList";
-					auto texToUpdate = GetDinoTexList()[index].get();
+					auto texToUpdate = GetDinoTexList()[texindex].get();
 
 
 					ProcessAndLoadImageIntoPoiner(&loadedImage, texToUpdate);
