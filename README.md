@@ -6,7 +6,7 @@ Update dinosaur textures at runtime.
 This is a proof of concept built on ReShade for replacing textures in DirectX games by hashing them at creation.
 
 ## How to use
- - Click on "Release" near the top of this page and download Release01.zip.
+ - Click on "Release" near the top of this page and download Release02.zip.
  - Extract the files and move them into your Jurassic World Evolution directory. 
  - Open the game.
  - Once in game, Hold SHIFT and press F2 to open the menu.
