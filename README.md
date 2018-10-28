@@ -1,20 +1,54 @@
-ReShade
-=======
+# JWEM
+Jurassic World Evolution Modkit
 
-ReShade is an advanced, fully generic post-processing injector for games and video software. Imagine your favorite game with ambient occlusion, real depth of field effects, color correction and more ... ReShade exposes an automated and generic way to access both frame color and depth information and all the tools to make it happen.
+Update dinosaur textures at runtime.
 
-## Building
+This is a proof of concept built on ReShade for replacing textures in DirectX games by hashing them at creation.
 
-You'll need both Git and Visual Studio 2017 or higher to build ReShade. Latter is required since the project makes use of some C++14 and C++17 features. Additionally a Python 2.7.9 or later (Python 3 is supported as well) installation is necessary for the `gl3w` dependency to build.
+## How to use
+ - Click on "Release" near the top of this page and download Release01.zip.
+ - Extract the files and move them into your Jurassic World Evolution directory. 
+ - Open the game.
+ - Once in game, Hold SHIFT and press F2 to open the menu.
+ - You may need change the Shader and/or Texture quality in the Settings.
+	
+	![JWEM UI](https://github.com/Pathos0925/JWEM/blob/master/ReadmeImages/JWEMmenu.png)
+## Also
+ - Any Dinosaurs you add should be detected automatically and added to the list. If you have a skin for that species, you should see a dropdown box that will let you select a new one.
+- Currently, only BASIC SKINS are detected and changable. Additionally, any changes to the basic skin will affect every dinosaur with that skin.
+- Add JWEMS skins to the skins folder. 
+	- Included is a basic skin for Ankylosaurus called Ankylosaurus Blue. After loading it, you should see a blue Ankylosaurus.
+	![BLUE ANKY](https://github.com/Pathos0925/JWEM/blob/master/ReadmeImages/BlueAnky.png)
+	
+## Creating Skins
 
-1. Clone this repository including all Git submodules
-2. Open the Visual Studio solution
-3. Select either the "32-bit" or "64-bit" target platform and build the solution (this will build ReShade and all dependencies)
+### For Sharing
+ - If you plan on making a skin pack (that can include albedo, normalmap, and other textures), use the Skin Builder.
+ - Click "Add" and select your modified albedo texture.
+ - Select the target species in the top right.
+ - Click "Save".
+ - Leave "Use GPU" Selected as using the CPU to compress DDS textures is very slow.
+ - Thats it, drop it in the skins folder!
+ 
+### For Testing
+ - This method is better if you plan on repeatedly loading a texture. Supports several formats like DDS and PNG
+ - Open SKIN_IDS.txt and find the species you want, name your file in the following format "You_skin_name_here_ID-RESOLUTION-TEXTURETYPE.png"
+ - If you're loading an Albedo texture for an Allosaurus, it might look like: Test1_ALLO-0-1024-A.PNG
+ - Or: RedTyranno_TYRA-0-1024-A.DDS
+ - Place the texture in the Skins folder and click "Reload Skins" in the UI.
+ - Higher resolutions are only found on a few dinosaurs, I think the large sauropods, so only use a higher resolution if your target resolution requires it.
+  - This method compresses the image on the GPU so it may take a few moments each time you load it. 
 
-## Contributing
+## Also
+ - At preasent, JWEM will likely lower your framerate significantly, you may need to lower your graphics settings. However you may need to keep Shader and Texture settings on medium or high.
+ - Any DLL injector should work, so long as you inject it right as the game starts.
+ - If you find loading a save with many dinosaurs takes too long, uncheck "Enabled" in the in-game menu until after you load the save and recheck it before you release a dinosaur.
+ 
+## Questions
+ - Where do I find textures for a dino?
+ 	- Search Google, theres a few methods.
+- Can I use ReShade with this?
+	- I dunno, maybe. Let me know what you find.
 
-Any contributions to the project are welcomed, it's recommended to use GitHub [pull requests](https://help.github.com/articles/using-pull-requests/).
-
-## License
-
-All the source code is licensed under the conditions of the [BSD 3-clause license](LICENSE.md).
+## TODO
+stuff
