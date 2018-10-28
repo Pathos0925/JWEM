@@ -1,9 +1,7 @@
 # JWEM
 Jurassic World Evolution Modkit
 
-Built on ReShade!
-
-This is a proof of concept for replacing textures in DirectX games by hashing them at creation.
+This is a proof of concept built on ReShade for replacing textures in DirectX games by hashing them at creation.
 
 ## How to use
  - Click on "Release" near the top of this page and download Release01.zip.
