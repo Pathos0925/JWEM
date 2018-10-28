@@ -34,6 +34,6 @@ This is a proof of concept for replacing textures in DirectX games by hashing th
  - This method is better if you plan on repeatedly loading a texture.
  - Using SKIN_IDS.txt, name your file in the following format ID-RESOLUTION-TEXTURETYPE
  - If you're loading an Albedo texture for an Allosaurus, it might look like: ALLO-0-1024-A
- - Place the texture in the Skins folder and click Reload Textures in the UI.
+ - Place the texture in the Skins folder and click "Reload Skins" in the UI.
  - Higher resolutions are only found on a few dinosaurs, I think the large sauropods, so only use a higher resolution if your target resolution requires it.
   - This method compresses the image on the GPU so it may take a few moments each time you load it. 
