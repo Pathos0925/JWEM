@@ -44,6 +44,8 @@ This is a proof of concept built on ReShade for replacing textures in DirectX ga
  - If you find loading a save with many dinosaurs takes too long, uncheck "Enabled" in the in-game menu until after you load the save and recheck it before you release a dinosaur.
  
 ## Questions
+ - Texture looks odd?
+ 	- Try flipping it vertically.
  - Where do I find textures for a dino?
  	- Search Google, theres a few methods.
 - Can I use ReShade with this?
