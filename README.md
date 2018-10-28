@@ -1,6 +1,8 @@
 # JWEM
 Jurassic World Evolution Modkit
 
+Update dinosaur textures at runtime.
+
 This is a proof of concept built on ReShade for replacing textures in DirectX games by hashing them at creation.
 
 ## How to use
