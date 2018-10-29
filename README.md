@@ -16,7 +16,7 @@ This is a proof of concept built on ReShade for replacing textures in DirectX ga
 	![JWEM UI](https://github.com/Pathos0925/JWEM/blob/master/ReadmeImages/JWEMmenu.png)
 ## Also
  - Any Dinosaurs you add should be detected automatically and added to the list. If you have a skin for that species, you should see a dropdown box that will let you select a new one.
-- Currently, only BASIC SKINS are detected and changable. Additionally, any changes to the basic skin will affect every dinosaur with that skin.
+- Currently, any changes to a skin will affect every dinosaur with that skin.
 - Add JWEMS skins to the skins folder. 
 	- Included is a basic skin for Ankylosaurus called Ankylosaurus Blue. After loading it, you should see a blue Ankylosaurus.
 	![BLUE ANKY](https://github.com/Pathos0925/JWEM/blob/master/ReadmeImages/BlueAnky.png)
