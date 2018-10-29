@@ -44,6 +44,8 @@ This is a proof of concept built on ReShade for replacing textures in DirectX ga
  - If you find loading a save with many dinosaurs takes too long, uncheck "Enabled" in the in-game menu until after you load the save and recheck it before you release a dinosaur.
  
 ## Questions
+ - My game crashes after loading a save
+ 	- A save with many dinosaurs/buildings in it seems to crash it. Try disabling JWEM by unchcking "Enabled", load your save, then before placing a dinosaur, re-enable it. It should detect all dinosaurs released after that.
  - Texture looks odd?
  	- Try flipping it vertically.
  - Where do I find textures for a dino?
