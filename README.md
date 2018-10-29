@@ -44,7 +44,8 @@ This is a proof of concept built on ReShade for replacing textures in DirectX ga
  - JWEM may lower your framerate. If you adjust your graphics settings, you may need to keep Shader and Texture settings on medium or high.
  - If you find loading a save with many dinosaurs takes too long, or crashes, uncheck "Enabled" until after you load the save, then recheck it before you release a dinosaur.
  ## Questions
-
+ - My game quits/crashes right after I open it.
+ 	- Try renaming dxgi.dll to d3d11.dll
  - Texture looks odd?
  	- Try flipping it vertically.
  - Where do I find textures for a dino?
