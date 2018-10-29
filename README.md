@@ -10,7 +10,6 @@ This is a proof of concept built on ReShade for replacing textures in DirectX ga
  - Extract the files and move them into your Jurassic World Evolution directory. 
  - Open the game.
  - Once in game, Hold SHIFT and press F2 to open the menu.
- - You may need change the Shader and/or Texture quality in the Settings.
 	
 	![JWEM UI](https://github.com/Pathos0925/JWEM/blob/master/ReadmeImages/JWEMmenu.png)
 ## Also
