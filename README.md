@@ -56,4 +56,4 @@ This is a proof of concept built on ReShade for replacing textures in DirectX ga
  - copyright stuff here
  - If you plan on sharing a texture, please use the skin builder to make a .JWEMS file, this lets it load faster and adds a small layer of protection to their intellectual property
 ## TODO
-stuff
+Clean up the code, its a complete mess. The naming conventions aren't even consistent. 
