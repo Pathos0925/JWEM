@@ -1,3 +1,5 @@
+# This modkit no longer works as of JWE 1.8
+
 # JWEM
 Jurassic World Evolution Modkit
 
