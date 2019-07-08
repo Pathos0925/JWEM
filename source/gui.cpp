@@ -47,6 +47,8 @@ namespace reshade
 
 	void runtime::draw_overlay()
 	{
+		Singleton::getInstance()->frame++;
+
 		const bool show_splash = (_last_present_time - _last_reload_time) < std::chrono::seconds(5);
 
 		if (!_overlay_key_setting_active &&
@@ -1089,6 +1091,13 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 			//we can only store 1 skin type at a time. Also the pointers are reused every time a new dino is created
 
 			//CRCs for textures that made a match
+			/*
+			int * item_list = new int[JWEmSingleton->DinoCrcList.size()];
+			for (int i = 0; i < JWEmSingleton->DinoCrcList.size(); i++)
+				item_list[i] = 0;
+			int ComboCount = 0;
+			*/
+			static int item_list[128];
 			for (auto const& dinoTex : JWEmSingleton->DinoCrcList)
 			{
 				crcListId++;
@@ -1135,6 +1144,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 					std::vector<std::string> fileNames;
 					auto files = JWEmSingleton->getSkinsForCrc(dinoTex, &fileNames);
 
+
 					if (fileNames.size() > 0)
 					{
 						char ** arr = new char*[fileNames.size()];
@@ -1143,17 +1153,20 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 							strcpy(arr[i], fileNames[i].c_str());
 						}
 
-						static int item_current = 0;
 						ImGui::SameLine();
-						ImGui::Combo(std::to_string(crcListId).c_str(), &item_current, arr, fileNames.size());
+
+						//static int item_current = 0;
+						ImGui::Combo(std::to_string(crcListId).c_str(), &item_list[texCount], arr, fileNames.size());
 
 						ImGui::SameLine();
 						if (ImGui::Button("Load"))
 						{
-							JWEmSingleton->UpdateDinoTexture(crcListId, files[item_current]);
+							JWEmSingleton->UpdateDinoTexture(crcListId, files[item_list[texCount]]);
 							LOG(INFO) << "Loaded!";
 							//LOG(DEBUG) << "Here we would load:" << files[item_current];
 						}
+
+						//ComboCount++;
 					}
 
 
@@ -1205,9 +1218,14 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 			}
 			if (ImGui::CollapsingHeader("Misc"))
 			{
+				ImGui::Checkbox("Record Shader Resource Views", &JWEmSingleton->RecordShaderResourceViews);
 				ImGui::Text("Last Present Duration: ");
-				ImGui::Text(std::to_string(JWEmSingleton->lastPresentDuration).c_str());
+				//ImGui::Text(std::to_string(JWEmSingleton->lastPresentDuration).c_str());
 				ImGui::Checkbox("Disable ReShade", &JWEmSingleton->DisableReshade);
+				if (ImGui::Button("Scan Shaders"))
+				{
+					JWEmSingleton->ScanShaders();
+				}
 			}
 			if (ImGui::CollapsingHeader("Recorded Textures"))
 			{

@@ -6,6 +6,7 @@
 #include "log.hpp"
 #include "d3d11_device.hpp"
 #include "d3d11_device_context.hpp"
+#include "JWEMSingleton.h"
 
 void D3D11DeviceContext::clear_drawcall_stats()
 {
@@ -250,10 +251,15 @@ void STDMETHODCALLTYPE D3D11DeviceContext::VSSetConstantBuffers(UINT StartSlot, 
 }
 void STDMETHODCALLTYPE D3D11DeviceContext::PSSetShaderResources(UINT StartSlot, UINT NumViews, ID3D11ShaderResourceView *const *ppShaderResourceViews)
 {
+	Singleton::getInstance()->CheckPSSetShaderResources(StartSlot, NumViews, ppShaderResourceViews);
 	_orig->PSSetShaderResources(StartSlot, NumViews, ppShaderResourceViews);
+	return;	
 }
 void STDMETHODCALLTYPE D3D11DeviceContext::PSSetShader(ID3D11PixelShader *pPixelShader, ID3D11ClassInstance *const *ppClassInstances, UINT NumClassInstances)
 {
+	if (Singleton::getInstance()->MonitorTextures)
+		Singleton::getInstance()->CheckSetShader(pPixelShader);
+
 	_orig->PSSetShader(pPixelShader, ppClassInstances, NumClassInstances);
 }
 void STDMETHODCALLTYPE D3D11DeviceContext::PSSetSamplers(UINT StartSlot, UINT NumSamplers, ID3D11SamplerState *const *ppSamplers)
@@ -423,10 +429,15 @@ void STDMETHODCALLTYPE D3D11DeviceContext::CopySubresourceRegion(ID3D11Resource 
 }
 void STDMETHODCALLTYPE D3D11DeviceContext::CopyResource(ID3D11Resource *pDstResource, ID3D11Resource *pSrcResource)
 {
+	if (Singleton::getInstance()->MonitorTextures)
+		Singleton::getInstance()->CheckCopyResource(pSrcResource);
+
 	_orig->CopyResource(pDstResource, pSrcResource);
 }
 void STDMETHODCALLTYPE D3D11DeviceContext::UpdateSubresource(ID3D11Resource *pDstResource, UINT DstSubresource, const D3D11_BOX *pDstBox, const void *pSrcData, UINT SrcRowPitch, UINT SrcDepthPitch)
 {
+	if (Singleton::getInstance()->MonitorTextures)
+		LOG(DEBUG) << "UpdateSubresource"; //TESTING
 	_orig->UpdateSubresource(pDstResource, DstSubresource, pDstBox, pSrcData, SrcRowPitch, SrcDepthPitch);
 }
 void STDMETHODCALLTYPE D3D11DeviceContext::CopyStructureCount(ID3D11Buffer *pDstBuffer, UINT DstAlignedByteOffset, ID3D11UnorderedAccessView *pSrcView)
@@ -435,6 +446,8 @@ void STDMETHODCALLTYPE D3D11DeviceContext::CopyStructureCount(ID3D11Buffer *pDst
 }
 void STDMETHODCALLTYPE D3D11DeviceContext::ClearRenderTargetView(ID3D11RenderTargetView *pRenderTargetView, const FLOAT ColorRGBA[4])
 {
+	if (Singleton::getInstance()->RecordShaderResourceViews)
+			Singleton::getInstance()->CheckClearRenderTargetView(pRenderTargetView);
 	_orig->ClearRenderTargetView(pRenderTargetView, ColorRGBA);
 }
 void STDMETHODCALLTYPE D3D11DeviceContext::ClearUnorderedAccessViewUint(ID3D11UnorderedAccessView *pUnorderedAccessView, const UINT Values[4])
@@ -535,10 +548,14 @@ void STDMETHODCALLTYPE D3D11DeviceContext::VSGetConstantBuffers(UINT StartSlot, 
 }
 void STDMETHODCALLTYPE D3D11DeviceContext::PSGetShaderResources(UINT StartSlot, UINT NumViews, ID3D11ShaderResourceView **ppShaderResourceViews)
 {
+	if (Singleton::getInstance()->MonitorTextures)
+		LOG(DEBUG) << "PSGetShaderResources"; //TESTING
 	_orig->PSGetShaderResources(StartSlot, NumViews, ppShaderResourceViews);
 }
 void STDMETHODCALLTYPE D3D11DeviceContext::PSGetShader(ID3D11PixelShader **ppPixelShader, ID3D11ClassInstance **ppClassInstances, UINT *pNumClassInstances)
 {
+	if (Singleton::getInstance()->MonitorTextures)
+		LOG(DEBUG) << "PSGetShader"; //TESTING
 	_orig->PSGetShader(ppPixelShader, ppClassInstances, pNumClassInstances);
 }
 void STDMETHODCALLTYPE D3D11DeviceContext::PSGetSamplers(UINT StartSlot, UINT NumSamplers, ID3D11SamplerState **ppSamplers)
@@ -547,6 +564,8 @@ void STDMETHODCALLTYPE D3D11DeviceContext::PSGetSamplers(UINT StartSlot, UINT Nu
 }
 void STDMETHODCALLTYPE D3D11DeviceContext::VSGetShader(ID3D11VertexShader **ppVertexShader, ID3D11ClassInstance **ppClassInstances, UINT *pNumClassInstances)
 {
+	if (Singleton::getInstance()->MonitorTextures)
+		LOG(DEBUG) << "VSGetShader"; //TESTING
 	_orig->VSGetShader(ppVertexShader, ppClassInstances, pNumClassInstances);
 }
 void STDMETHODCALLTYPE D3D11DeviceContext::PSGetConstantBuffers(UINT StartSlot, UINT NumBuffers, ID3D11Buffer **ppConstantBuffers)

@@ -129,7 +129,13 @@ public:
 
 	};
 
+	std::map<uint32_t, com_ptr<ID3D11PixelShader>> crcToPixelshader = {
 
+	};
+
+	std::map<com_ptr<ID3D11ShaderResourceView>, uint32_t> crcToShaderResourceView = {
+
+	};
 
 	//make this a map?
 	std::vector<com_ptr<ID3D11Texture2D>> DinoTexList;
@@ -171,6 +177,11 @@ public:
 
 	ULONG LoadedTextureRef = 0;
 	bool DisableReshade = false;
+	bool RecordShaderResourceViews = false;
+
+	bool RenderTargetCleared = false;
+	int FoundViewCount = 0;
+	int frame = 0;
 	//--
 
 	long long lastPresentDuration = 0;
@@ -178,6 +189,13 @@ public:
 	ID3D11DeviceContext * singleContext;
 	ID3D11Device * originalDevice;
 
+	com_ptr< ID3D11PixelShader> lastCreatedPixelShader;
+	uint32_t setShader;
+	com_ptr< ID3D11PixelShader> lastSetPixelShader;
+
+	ID3D11RenderTargetView * lastRenderTarget = nullptr;
+	ID3D11RenderTargetView * foundRenderTarget = nullptr;
+	//bool FoundRenderTarget;
 
 	bool savingImage = false;
 	const DWORD texFlags = DirectX::DDS_FLAGS_NONE;
@@ -258,6 +276,18 @@ public:
 			}
 		}
 		return filename;
+	}
+
+	void CheckShaderResource(ID3D11Resource *pResource)
+	{
+		for (int i = 0; i < DinoTexList.size(); i++)
+		{
+			auto checkPointer = DinoTexList[i].get();
+			if (pResource == checkPointer)
+			{
+				LOG(DEBUG) << "Duplicate dino found for crc: " << DinoCrcList[i]; //TESTING
+			}
+		}
 	}
 
 	void ReloadDiscoveredTextures()
@@ -419,7 +449,207 @@ public:
 		}
 
 
+		foundRenderTarget = nullptr;
+	}
 
+	//taken from NinjaRipper
+	//https://github.com/riccochicco/ninjaripper
+	void ScanShaders()
+	{
+		HRESULT hr;
+		auto shaderSize = D3D11_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT;
+
+		ID3D11ShaderResourceView * ShaderRes[D3D11_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT] = {};
+		//Init with NULL
+		for (size_t i = 0; i < shaderSize; i++) {
+			ShaderRes[i] = NULL;
+		}
+
+		singleContext->PSGetShaderResources(0, shaderSize, &ShaderRes[0]);
+
+		for (size_t i = 0; i < sizeof(ShaderRes); i++) {
+
+			ID3D11ShaderResourceView* pShaderResView = ShaderRes[i];
+			if (pShaderResView) {
+				//Check resource type for "Texture"
+				D3D11_SHADER_RESOURCE_VIEW_DESC  Descr;
+				pShaderResView->GetDesc(&Descr);
+				if (
+					(Descr.ViewDimension == D3D11_SRV_DIMENSION_BUFFER) ||
+					(Descr.ViewDimension == D3D11_SRV_DIMENSION_BUFFEREX)
+					) {
+					continue;//Skip buffer resources
+				}
+			}
+			else
+			{
+				continue;
+			}
+			D3D11_TEXTURE2D_DESC TexDescr;
+			D3D11_SHADER_RESOURCE_VIEW_DESC  Descr;
+
+
+			pShaderResView->GetDesc(&Descr);
+			if (Descr.ViewDimension != D3D11_SRV_DIMENSION_TEXTURE2D)
+			{
+				return;
+			}
+
+			com_ptr<ID3D11Resource>     pSrcResourceRef;
+			//Get ID3D11Resource* from ID3D11ShaderResourceView*
+			pShaderResView->GetResource(&pSrcResourceRef);
+
+			//Cast ID3D11Resource* to ID3D11Texture2D*
+			ID3D11Texture2D* pSrcTexture = NULL;
+			pSrcTexture = static_cast <ID3D11Texture2D*>(pSrcResourceRef.get());
+			// Check pointer for NULL
+			pSrcTexture->GetDesc(&TexDescr);
+
+			if (TexDescr.Format == DXGI_FORMAT::DXGI_FORMAT_BC7_UNORM_SRGB)
+			{
+				LOG(DEBUG) << "Found possible albedo texture";
+			}
+		}
+	}
+
+	void ProcessShaderResourceView(ID3D11ShaderResourceView* pShaderResView)
+	{
+		LOG(DEBUG) << "ProcessShaderResourceView";
+		
+		//ID3D11ShaderResourceView* pShaderResView = ShaderRes[i];
+		D3D11_SHADER_RESOURCE_VIEW_DESC  Descr;
+		if (pShaderResView) {
+			//Check resource type for "Texture"
+			pShaderResView->GetDesc(&Descr);
+			if (
+				(Descr.ViewDimension == D3D11_SRV_DIMENSION_BUFFER) ||
+				(Descr.ViewDimension == D3D11_SRV_DIMENSION_BUFFEREX)
+				)
+			{
+				return;
+			}
+		}
+		else
+		{
+			return;
+		}
+		D3D11_TEXTURE2D_DESC TexDescr;
+		//D3D11_SHADER_RESOURCE_VIEW_DESC  Descr;
+
+		//pShaderResView->GetDesc(&Descr);
+		if (Descr.ViewDimension != D3D11_SRV_DIMENSION_TEXTURE2D && Descr.ViewDimension != D3D11_SRV_DIMENSION_TEXTURE2DARRAY)
+		{
+			return;
+		}
+
+		com_ptr<ID3D11Resource>     pSrcResourceRef;
+		//Get ID3D11Resource* from ID3D11ShaderResourceView*
+		/*
+		if (Descr.ViewDimension == D3D11_SRV_DIMENSION_TEXTURE2DARRAY)
+		{
+
+		}
+		else if (Descr.ViewDimension == D3D11_SRV_DIMENSION_TEXTURE2D)
+		{
+
+		}
+		*/
+		pShaderResView->GetResource(&pSrcResourceRef);
+
+		//Cast ID3D11Resource* to ID3D11Texture2D*
+		ID3D11Texture2D* pSrcTexture = NULL;
+		pSrcTexture = static_cast <ID3D11Texture2D*>(pSrcResourceRef.get());
+		// Check pointer for NULL
+		pSrcTexture->GetDesc(&TexDescr);
+
+		if (TexDescr.Height >= RecordTextureCutoffSize
+			&& TexDescr.Width >= RecordTextureCutoffSize
+			//&& pDesc->Height == 1024
+			//&& pDesc->Width == 1024
+			&& (TexDescr.Format == DXGI_FORMAT::DXGI_FORMAT_BC7_UNORM_SRGB
+				|| TexDescr.Format == DXGI_FORMAT::DXGI_FORMAT_BC5_UNORM
+				|| TexDescr.Format == DXGI_FORMAT::DXGI_FORMAT_BC7_UNORM
+				|| TexDescr.Format == DXGI_FORMAT::DXGI_FORMAT_BC1_TYPELESS)
+			)
+		{
+			PrintDescription(TexDescr);
+
+			ptrdiff_t pos = find(DinoTexList.begin(), DinoTexList.end(), pSrcTexture) - DinoTexList.begin();
+			if (pos < DinoTexList.size())
+			{
+				auto crc = DinoCrcList[pos];
+				LOG(INFO) << "Found Crc for ID3D11ShaderResourceView: " << crc;
+				crcToShaderResourceView.insert(std::pair<com_ptr<ID3D11ShaderResourceView>, uint32_t>(pShaderResView, crc));
+			}
+
+		}
+
+		//LastCrcCheckCreatedResource
+		//uint32_t crc = CrcInitialData(pSrcTexture, TexDescr.Width * TexDescr.Height);
+
+		/*
+		std::vector<uint32_t>::iterator it = std::find(crcListCrc.begin(), crcListCrc.end(), crc);
+		if (it != crcListCrc.end())
+		{
+			LOG(INFO) << "Found Crc for ID3D11ShaderResourceView: " << crc;
+			crcToShaderResourceView.insert(std::pair<com_ptr<ID3D11ShaderResourceView>, uint32_t>(pShaderResView, crc));
+		}
+		*/
+
+	}
+
+	
+	void SaveResourceAsDDS(ID3D11Resource * pSrcTexture)
+	{
+		DirectX::ScratchImage image;
+		HRESULT hr = DirectX::CaptureTexture(originalDevice, singleContext, pSrcTexture, image);
+		//singleton_mutex.unlock();
+
+		if (SUCCEEDED(hr))
+		{
+			LOG(DEBUG) << "Saving to memory..";
+
+
+			PrintMetadata(image.GetMetadata());
+
+			//auto crc = GetDebugInitialCrcList()[texIdToSave];
+
+			std::stringstream ss;
+			/*
+			if (CrcAsName)
+			{
+				ss << saveTextureDirectory << "\\" << texIdToSave << "_" << crc << "_.dds";
+			}
+			else
+			{
+				ss << saveTextureDirectory << "\\" << std::to_string(texIdToSave) << ".dds";
+			}
+			*/
+			ss << saveTextureDirectory << "\\" << image.GetMetadata().width << "-" << image.GetMetadata().height << ".dds";
+			std::string dir = ss.str();
+			std::wstring widestr = std::wstring(dir.begin(), dir.end());
+			const wchar_t* cdar = widestr.c_str();
+
+			LOG(DEBUG) << "Filename: " << cdar;
+
+			LOG(DEBUG) << "SaveToDDSFile...";
+			hr = SaveToDDSFile(image.GetImages(), image.GetImageCount(), image.GetMetadata(),
+				DirectX::DDS_FLAGS_NONE, cdar);
+
+
+			if (FAILED(hr))
+			{
+				LOG(WARNING) << "Could not SaveToDDSFile";
+			}
+			else
+			{
+				LOG(WARNING) << "Save Complete?";
+			}
+		}
+		else
+		{
+			LOG(WARNING) << "Could not CaptureTexture";
+		}
 	}
 
 	void ProcessJWEMS(std::string filename)
@@ -591,7 +821,9 @@ public:
 		{
 			DinoTexList.push_back(tex);
 			DinoCrcList.push_back(initialCrc);
+			crcToPixelshader.insert(std::pair<uint32_t, com_ptr<ID3D11PixelShader>>(initialCrc, lastCreatedPixelShader));
 		}
+		
 		/*
 		std::map<uint32_t, std::string>::iterator it = crcTextureName.find(initialCrc);
 		if (it != crcTextureName.end())
@@ -609,6 +841,74 @@ public:
 
 		return false;
 	}
+
+	void CheckSetShader(com_ptr<ID3D11PixelShader> shader)
+	{
+		if (shader != nullptr)
+			lastSetPixelShader = shader;		
+	}
+	void CheckPSSetShaderResources(UINT StartSlot, UINT NumViews, ID3D11ShaderResourceView *const *ppShaderResourceViews)
+	{
+		//LOG(DEBUG) << "CheckPSSetShaderResources";
+
+		if (!RecordShaderResourceViews)
+			return;
+
+		if (foundRenderTarget != nullptr &&  foundRenderTarget != lastRenderTarget)
+			return;
+		
+
+		if (RenderTargetCleared)
+		{
+			FoundViewCount = 0;
+			RenderTargetCleared = false;
+		}
+
+
+		for (int i = 0; i < NumViews; i++)
+		{
+			std::map<com_ptr<ID3D11ShaderResourceView>, uint32_t>::iterator it = crcToShaderResourceView.find(ppShaderResourceViews[i]);
+			if (it != crcToShaderResourceView.end())
+			{
+				//if (foundRenderTarget == nullptr)
+				//	foundRenderTarget = lastRenderTarget;
+
+				LOG(DEBUG) << "-CheckPSSetShaderResources- ";
+				if (lastSetPixelShader != nullptr)
+					LOG(DEBUG) << "PixelShader: " << lastSetPixelShader.get();
+				LOG(DEBUG) <<  ". frame: " << frame << ". FoundViewCount: " << FoundViewCount
+					<< ". lastRenderTarget: " << lastRenderTarget
+					<< "Loading texture into " << it->first.get() << " - " << it->second;
+				
+			}
+		}
+
+		FoundViewCount++;
+	}
+	void CheckClearRenderTargetView(ID3D11RenderTargetView *pRenderTargetView)
+	{
+		lastRenderTarget = pRenderTargetView;
+		RenderTargetCleared = true;
+		//LOG(DEBUG) << "CheckClearRenderTargetView: " << pRenderTargetView; //TESTING
+	}
+	void CheckCopyResource(com_ptr<ID3D11Resource> source)
+	{
+		return;
+		if (source == nullptr)
+			return;
+		
+		ID3D11Texture2D* pSrcTexture = NULL;
+		pSrcTexture = static_cast <ID3D11Texture2D*>(source.get());
+
+		ptrdiff_t pos = find(DinoTexList.begin(), DinoTexList.end(), pSrcTexture) - DinoTexList.begin();
+		if (pos < DinoTexList.size())
+		{
+			LOG(DEBUG) << "CheckCopyResource- " << source.get() << " Was copied!";
+			//old_name_ not found
+		}
+		//DinoTexList
+	}
+
 	std::vector<com_ptr<ID3D11Texture2D>> GetDinoTexList()
 	{
 		mtx.lock();

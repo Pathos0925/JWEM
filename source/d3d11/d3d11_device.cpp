@@ -204,6 +204,8 @@ ULONG STDMETHODCALLTYPE D3D11Device::Release()
 }
 HRESULT STDMETHODCALLTYPE D3D11Device::CreateBuffer(const D3D11_BUFFER_DESC *pDesc, const D3D11_SUBRESOURCE_DATA *pInitialData, ID3D11Buffer **ppBuffer)
 {
+	//if (Singleton::getInstance()->MonitorTextures)
+	//	LOG(DEBUG) << "CreateBuffer"; //TESTING
 	return _orig->CreateBuffer(pDesc, pInitialData, ppBuffer);
 }
 HRESULT STDMETHODCALLTYPE D3D11Device::CreateTexture1D(const D3D11_TEXTURE1D_DESC *pDesc, const D3D11_SUBRESOURCE_DATA *pInitialData, ID3D11Texture1D **ppTexture1D)
@@ -214,6 +216,8 @@ HRESULT STDMETHODCALLTYPE D3D11Device::CreateTexture2D(const D3D11_TEXTURE2D_DES
 {
 	
 	//d_mutex.lock();
+	if (Singleton::getInstance()->MonitorTextures)
+		LOG(DEBUG) << "CreateTexture2D"; //TESTING
 
 	Singleton * JWEmSingleton = Singleton::getInstance();
 	JWEmSingleton->singleContext = _immediate_context;
@@ -301,7 +305,15 @@ HRESULT STDMETHODCALLTYPE D3D11Device::CreateTexture3D(const D3D11_TEXTURE3D_DES
 }
 HRESULT STDMETHODCALLTYPE D3D11Device::CreateShaderResourceView(ID3D11Resource *pResource, const D3D11_SHADER_RESOURCE_VIEW_DESC *pDesc, ID3D11ShaderResourceView **ppSRView)
 {
-	return _orig->CreateShaderResourceView(pResource, pDesc, ppSRView);
+	if (Singleton::getInstance()->RecordShaderResourceViews)
+		LOG(DEBUG) << "CreateShaderResourceView"; //TESTING
+
+	auto result = _orig->CreateShaderResourceView(pResource, pDesc, ppSRView);
+	
+	if (Singleton::getInstance()->RecordShaderResourceViews)//SaveResourceAsDDS
+		Singleton::getInstance()->ProcessShaderResourceView(*ppSRView);
+		
+	return result;
 }
 HRESULT STDMETHODCALLTYPE D3D11Device::CreateUnorderedAccessView(ID3D11Resource *pResource, const D3D11_UNORDERED_ACCESS_VIEW_DESC *pDesc, ID3D11UnorderedAccessView **ppUAView)
 {
@@ -309,6 +321,8 @@ HRESULT STDMETHODCALLTYPE D3D11Device::CreateUnorderedAccessView(ID3D11Resource 
 }
 HRESULT STDMETHODCALLTYPE D3D11Device::CreateRenderTargetView(ID3D11Resource *pResource, const D3D11_RENDER_TARGET_VIEW_DESC *pDesc, ID3D11RenderTargetView **ppRTView)
 {
+	if (Singleton::getInstance()->MonitorTextures)
+		LOG(DEBUG) << "CreateRenderTargetView"; //TESTING
 	return _orig->CreateRenderTargetView(pResource, pDesc, ppRTView);
 }
 HRESULT STDMETHODCALLTYPE D3D11Device::CreateDepthStencilView(ID3D11Resource *pResource, const D3D11_DEPTH_STENCIL_VIEW_DESC *pDesc, ID3D11DepthStencilView **ppDepthStencilView)
@@ -321,10 +335,12 @@ HRESULT STDMETHODCALLTYPE D3D11Device::CreateInputLayout(const D3D11_INPUT_ELEME
 }
 HRESULT STDMETHODCALLTYPE D3D11Device::CreateVertexShader(const void *pShaderBytecode, SIZE_T BytecodeLength, ID3D11ClassLinkage *pClassLinkage, ID3D11VertexShader **ppVertexShader)
 {
+	LOG(DEBUG) << "CreateVertexShader"; //TESTING
 	return _orig->CreateVertexShader(pShaderBytecode, BytecodeLength, pClassLinkage, ppVertexShader);
 }
 HRESULT STDMETHODCALLTYPE D3D11Device::CreateGeometryShader(const void *pShaderBytecode, SIZE_T BytecodeLength, ID3D11ClassLinkage *pClassLinkage, ID3D11GeometryShader **ppGeometryShader)
 {
+	LOG(DEBUG) << "CreateGeometryShader"; //TESTING
 	return _orig->CreateGeometryShader(pShaderBytecode, BytecodeLength, pClassLinkage, ppGeometryShader);
 }
 HRESULT STDMETHODCALLTYPE D3D11Device::CreateGeometryShaderWithStreamOutput(const void *pShaderBytecode, SIZE_T BytecodeLength, const D3D11_SO_DECLARATION_ENTRY *pSODeclaration, UINT NumEntries, const UINT *pBufferStrides, UINT NumStrides, UINT RasterizedStream, ID3D11ClassLinkage *pClassLinkage, ID3D11GeometryShader **ppGeometryShader)
@@ -333,7 +349,10 @@ HRESULT STDMETHODCALLTYPE D3D11Device::CreateGeometryShaderWithStreamOutput(cons
 }
 HRESULT STDMETHODCALLTYPE D3D11Device::CreatePixelShader(const void *pShaderBytecode, SIZE_T BytecodeLength, ID3D11ClassLinkage *pClassLinkage, ID3D11PixelShader **ppPixelShader)
 {
-	return _orig->CreatePixelShader(pShaderBytecode, BytecodeLength, pClassLinkage, ppPixelShader);
+	LOG(DEBUG) << "CreatePixelShader"; //TESTING
+	auto result = _orig->CreatePixelShader(pShaderBytecode, BytecodeLength, pClassLinkage, ppPixelShader);
+	Singleton::getInstance()->lastCreatedPixelShader = *ppPixelShader;
+	return result;
 }
 HRESULT STDMETHODCALLTYPE D3D11Device::CreateHullShader(const void *pShaderBytecode, SIZE_T BytecodeLength, ID3D11ClassLinkage *pClassLinkage, ID3D11HullShader **ppHullShader)
 {
@@ -365,6 +384,8 @@ HRESULT STDMETHODCALLTYPE D3D11Device::CreateRasterizerState(const D3D11_RASTERI
 }
 HRESULT STDMETHODCALLTYPE D3D11Device::CreateSamplerState(const D3D11_SAMPLER_DESC *pSamplerDesc, ID3D11SamplerState **ppSamplerState)
 {
+	if (Singleton::getInstance()->MonitorTextures)
+		LOG(DEBUG) << "CreateSamplerState"; //TESTING
 	return _orig->CreateSamplerState(pSamplerDesc, ppSamplerState);
 }
 HRESULT STDMETHODCALLTYPE D3D11Device::CreateQuery(const D3D11_QUERY_DESC *pQueryDesc, ID3D11Query **ppQuery)
@@ -407,6 +428,9 @@ HRESULT STDMETHODCALLTYPE D3D11Device::CreateDeferredContext(UINT ContextFlags, 
 }
 HRESULT STDMETHODCALLTYPE D3D11Device::OpenSharedResource(HANDLE hResource, REFIID ReturnedInterface, void **ppResource)
 {
+
+	if (Singleton::getInstance()->MonitorTextures)
+		LOG(DEBUG) << "OpenSharedResource"; //TESTING
 	return _orig->OpenSharedResource(hResource, ReturnedInterface, ppResource);
 }
 HRESULT STDMETHODCALLTYPE D3D11Device::CheckFormatSupport(DXGI_FORMAT Format, UINT *pFormatSupport)
